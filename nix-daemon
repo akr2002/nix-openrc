@@ -1,0 +1,20 @@
+#!/usr/bin/openrc-run
+
+description="Nix multi-user support daemon"
+
+command="/nix/var/nix/profiles/default/bin/nix-daemon"
+comamnd_background="yes"
+command_args_background="--daemon"
+pidfile="/run/$RC_SVCNAME.pid"
+
+start() {
+	ebegin "Starting ${SVCNAME}"
+	start-stop-daemon --start --quiet --background --exec $command
+	eend ${?}
+}
+
+stop() {
+	ebegin "Stopping ${SVCNAME}"
+	start-stop-daemon --stop --quiet --exec $command
+	eend ${?}
+}
